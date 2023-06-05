@@ -1,37 +1,65 @@
-
 #include <iostream>
-#include <string>
+#include <vector>
 using namespace std;
-
+class penerbit;
+class pengarang {
+public:
+	string nama;
+	vector<penerbit*> daftar_penerbit;
+	pengarang(string pNama) :nama(pNama) {
+		cout << "pengarang \"" << nama << "\" tidak ada\n";
+	}
+	~pengarang() {
+		cout << "pengarang \"" << nama << "\" tidak ada\n";
+	}
+	void tambahpenerbit(penerbit*);
+	void cetakpenerbit();
+};
 class penerbit {
 public:
-	static int buku;
-	int id;
 	string nama;
-
-	void setID();
-	void printAll();
-	penerbit(string pnama) :nama(pnama) { setID(); }
+	vector<pengarang*> daftar_pengarang;
+	penerbit(string pNama) :nama(pNama) {
+		cout << "penerbit \"" << nama << "\" ada\n";
+	}
+	~penerbit() {
+		cout << "penerbit \"" << nama << "\" tidak ada\n";
+	}
+	void tambahpengarang(pengarang*);
+	void cetakpengarang();
 };
-
-void penerbit::setID() {
-	id = ++buku;
+void pengarang::tambahpenerbit(penerbit* ppenerbit) {
+	daftar_penerbit.push_back(ppenerbit);
 }
-
-void penerbit::printAll() {
-	cout << "Nama = " << nama << endl;
+void pengarang::cetakpenerbit() {
+	cout << "Daftar pengarang pada penerbit \"" << this->nama << "\":n";
+	for (auto& a : daftar_penerbit) {
+		cout << a->nama << "\n";
+	}
+	cout << endl;
+}
+void penerbit::tambahpengarang(pengarang* ppengarang) {
+	daftar_pengarang.push_back(ppengarang);
+	pPasien->tambahDokter(this);
+}
+void penerbit::cetakpengarang() {
+	cout << "Daftar penerbit yang diikuti Giga \"" << this->nama << "\":\n";
+	for (auto& a : daftar_pasien) {
+		cout << a->nama << "\n";
+	}
 	cout << endl;
 }
 
-int main() {
-	penerbit daftarpengarangpadapenerbit_Gamapress("joko,lia,giga");
-	penerbit daftarpengarangpadapenerbit_Intanpariwara("asroni,giga");
-	penerbit daftarpenerbityangdiikuti_Giga("gamapress,intanpariwara");
-	penerbit daftarbukuyangdikarangg_Joko("fisika,algoritma");
 
-	daftarpengarangpadapenerbit_Gamapress.printAll();
-	daftarpengarangpadapenerbit_Intanpariwara.printAll();
-	daftarpenerbityangdiikuti_Giga.printAll();
-	daftarbukuyangdikarangg_Joko.printAll();
+int main() {
+	penerbit* varpenerbit1 = new penerbit("joko,lia,giga");
+	penerbit* varpenerbit2 = new penerbit("asroni,giga");
+	pengarang* varPengarang1 = new pengarang("Andi");
+	pengarang* varPengarang2 = new pengarang("Lia");
+
+	varpenerbit1->tambahpengarang(varpengarang1);
+	varpenerbit2->tambahpengarang(varpengarang2);
+	
+
 	return 0;
-};
+}
